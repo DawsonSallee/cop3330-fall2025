@@ -8,6 +8,8 @@ import java.util.Scanner;
 public class EventInvitation {
     public static void main(String[] args) {
 
+        // use scanner to grab the invitation data
+
         System.out.println("--- Event Invitation Generator ---\n");
 
         Scanner scanner = new Scanner(System.in);
@@ -28,6 +30,9 @@ public class EventInvitation {
 
         System.out.print("Enter the Guest's Name: ");
         String guestName = scanner.nextLine();
+
+
+        // print out the invitation with the collected data
 
         System.out.println("");
         System.out.println("--- Your Personalized Invitation ---\n");
