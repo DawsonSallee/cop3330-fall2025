@@ -17,10 +17,10 @@ public class EsportsAnalyze {
         Scanner scanner = new Scanner(System.in);
 
         //Initialize variables for tracking
-        double totalSum = 0;
-        int scoreCount = 0;
-        int highestScore = -1;
-        int masterTierCount = 0;
+        double totalSum = 0; // The totalSum of all valid scores entered.
+        int scoreCount = 0; // The scoreCount (number of valid scores entered).
+        int highestScore = -1; // The highestScore encountered so far.
+        int masterTierCount = 0; // The masterTierCount (number of scores meeting the "Master" tier threshold, e.g., 700 or higher). We will include any tiers above master in this tally.
 
         while(true) {
 
@@ -31,8 +31,8 @@ public class EsportsAnalyze {
                 break;
             }
 
-            totalSum += currentScore;
-            scoreCount += 1;
+            totalSum += currentScore; // total sum of all the scores for every game
+            scoreCount += 1; // total amount of games played
 
             highestScore = EsportsAnalyze.updateHighestScore(highestScore, currentScore);
 
