@@ -1,0 +1,38 @@
+{
+    // =========================================================================
+    // VS CODE "PRACTICE / HARD MODE" SETTINGS
+    // These settings disable most auto-completion and hints to help with memorization.
+    // Place this file in .vscode/settings.json within a specific practice folder.
+    // =========================================================================
+
+    // --- 1. Disable Live Error Checking (Red Squigglies) for Java ---
+    // This forces you to rely on the compiler (`javac`) to find errors.
+    "java.validate.enabled": false,
+
+    // --- 2. Disable Code Completion Pop-ups (IntelliSense) ---
+    // This stops VS Code from suggesting completions as you type.
+    "editor.quickSuggestions": {
+        "other": "off",
+        "comments": "off",
+        "strings": "off"
+    },
+    // This stops suggestions from appearing when you type trigger characters like '.'
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.acceptSuggestionOnEnter": "off",
+
+    // --- 3. Disable Parameter Hints ---
+    // This turns off the little box that shows a method's parameters when you're calling it.
+    "editor.parameterHints.enabled": false,
+
+    // --- 4. Disable Hover Information ---
+    // This stops the documentation pop-up when you mouse over a method or variable.
+    "editor.hover.enabled": false,
+
+    // --- 5. Disable Code Snippets ---
+    // This prevents snippets like `sysout` or `main` from appearing in suggestions.
+    "editor.snippetSuggestions": "none",
+
+    // --- 6. Disable Quick Fixes (The Lightbulb Icon) ---
+    // This stops the lightbulb from suggesting fixes like adding missing imports.
+    "editor.lightbulb.enabled": false
+}
