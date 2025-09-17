@@ -1,32 +1,27 @@
 import java.util.ArrayList;
 
 public class Q3 {
-
     public static void main(String[] args) {
 
-        ArrayList<Integer> numbers = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
 
-        numbers.add(5);
-        numbers.add(4);
-        numbers.add(3);
+        list.add(5);
+        list.add(4);
+        list.add(20);
 
-        int largestNumber = findLargest(numbers);
-
-        System.out.printf("%d", largestNumber);
-
+        int largest = findLargest(list);
+        System.out.printf("%d", largest);
     }
 
-    public static int findLargest(ArrayList<Integer> numbers) {
+    public static Integer findLargest(ArrayList<Integer> list) {
 
-        int currentLargest = numbers.get(0);
+        Integer largest = list.get(0);
 
-        for(int i = 1; i < numbers.size(); i++) {
-
-            if(currentLargest < numbers.get(i)) {
-                currentLargest = numbers.get(i);
-            }
+        for(int i = 0; i < list.size(); i++) {
+            if(largest < list.get(i))
+                largest = list.get(i);
         }
 
-        return currentLargest;
+        return largest;
     }
 }
