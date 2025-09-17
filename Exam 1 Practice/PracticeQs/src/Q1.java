@@ -1,26 +1,18 @@
 import java.util.Scanner;
 
 public class Q1 {
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Input a String");
-
+        System.out.println("Enter a sentence G");
         String userInput = scanner.nextLine();
 
         printReverseChars(userInput);
-
-        System.out.print("\n");
-
+        System.out.println("");
         printReverseWords(userInput);
-
-        System.out.print("\n");
-
         printWordStats(userInput);
-
-        System.out.print("\n");
-
         printNumberOfWordsWithVowels(userInput);
 
         scanner.close();
@@ -28,68 +20,53 @@ public class Q1 {
 
     public static void printReverseChars(String line) {
 
-        for(int i = line.length() - 1; i >= 0; i--) {
-
-            if(line.charAt(i) != ' ') {
-                System.out.printf("%c", line.charAt(i));
-            }
+        for(int i = 0; i < line.length(); i++) {
+            
+            if(line.charAt(line.length()-1-i) != ' ')
+                System.out.printf("%c",line.charAt(line.length()-1-i));
         }
-
     }
 
     public static void printReverseWords(String line) {
 
-        String[] words = line.split(" ");
+        String[] splitList = line.split(" ");
 
-        for(int i = words.length - 1; i >= 0; i--) {
-
-            System.out.printf("%s" + " ", words[i]);
+        for(int i = 0; i < splitList.length; i++) {
+            System.out.printf("%s ", splitList[splitList.length - 1 - i]);
         }
     }
-
     public static void printWordStats(String line) {
+        int evenWords = 0;
+        int oddWords = 0;
 
-        int evenCounter = 0;
-        int oddCounter = 0;
+        String[] splitList = line.split(" ");
 
-        String[] words = line.split(" ");
-
-        for(int i = 0; i < words.length; i++) {
-
-            if(words[i].length() % 2 == 0) {
-                evenCounter++;
+        for(int i = 0; i < splitList.length; i++) {
+            if(splitList[i].length()%2 == 0) {
+                evenWords++;
             } else {
-                oddCounter ++;
+                oddWords++;
             }
         }
         
-        System.out.printf("Even Numbers %d and Odd Numbers %d", evenCounter, oddCounter);
+        System.out.printf("\nOdd words = %d, Even words = %d\n", oddWords, evenWords);
+
     }
 
     public static void printNumberOfWordsWithVowels(String line) {
+        String[] splitList = line.toLowerCase().split(" ");
+        int vowelsTotal = 0;
 
-        int wordsYesVowels = 0;
-        int wordsNoVowels = 0;
-        boolean check = false;
-
-        String[] words = line.toLowerCase().split(" ");
-
-        for(int i = 0; i < words.length; i++) {
-            check = false;
-            for(int j = 0; j < words[i].length(); j++) {
-
-                if(words[i].charAt(j) == 'a' || words[i].charAt(j) == 'e' || words[i].charAt(j) == 'i' || words[i].charAt(j) == 'o' || words[i].charAt(j) == 'u') {
-                    check = true;
+        for(int i = 0; i < splitList.length; i++) {
+            for(int j = 0; j < splitList[i].length(); j++) {
+                if(splitList[i].charAt(j) == 'a' || splitList[i].charAt(j) =='e' || splitList[i].charAt(j) =='i' || splitList[i].charAt(j) =='o' || splitList[i].charAt(j) =='u') {
+                    vowelsTotal++;
+                    break;
                 }
             }
-
-            if(check) {
-                wordsYesVowels++;
-            }
-            else {
-                wordsNoVowels++;
-            }
         }
-        System.out.printf("Words with Vowels %d and Words without Vowels %d", wordsYesVowels, wordsNoVowels);
+
+        System.out.printf("Words with Vowels: %d\n", vowelsTotal);
     }
+
 }
