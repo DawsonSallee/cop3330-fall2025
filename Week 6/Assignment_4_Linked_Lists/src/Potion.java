@@ -246,7 +246,7 @@ public class Potion {
 
         } while (createAnotherChoice.equals("yes"));
 
-        System.out.printf("Total potions crafted: %d", currentPotion.getPotionCount());
+        System.out.printf("Total potions crafted: %d", Potion.getPotionCount());
         scanner.close();
     }
 }
