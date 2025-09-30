@@ -64,7 +64,7 @@ public class Potion {
 
         for(int i = 0; i < this.ingredients.size(); i++) {
 
-            System.out.printf("%d. %s (Power: %d)\n", i, this.ingredients.get(i).getName(), this.ingredients.get(i).getPower());
+            System.out.printf("%d. %s (Power: %d)\n", i + 1, this.ingredients.get(i).getName(), this.ingredients.get(i).getPower());
         }
 
     }
@@ -86,20 +86,24 @@ public class Potion {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        String userChoice = "no";
+
+        String userfirstChoice;
         String userChoiceType;
+        String createAnotherChoice;
 
         Potion currentPotion;
         String newIngredient;
         int newPower = 0;
         int newQuantity = 0;
 
-        System.out.println("Welcome, Mage. What potion will you craft today?");
-        System.out.print("Start with an ingredient? (yes/no): ");
-
-        userChoice = scanner.nextLine();
         do {
-            if(userChoice.equals("yes")) {
+
+            System.out.println("Welcome, Mage. What potion will you craft today?");
+            System.out.print("Start with an ingredient? (yes/no): ");
+
+            userfirstChoice = scanner.nextLine();
+
+            if(userfirstChoice.equals("yes")) {
                 
                 System.out.println("Enter your first ingredient name and power level (e.g., DragonScale 10): ");
 
@@ -111,16 +115,19 @@ public class Potion {
                 currentPotion = new Potion(firstIngredient);
 
             }else {
-
                 currentPotion = new Potion();
-
             }
 
-            while(userChoice.equals("yes")) {
+            while(true) {
                 
                 System.out.print("Add more ingredients? (single/multiple/mix/done): ");
                 
                 userChoiceType = scanner.nextLine();
+
+                if(userChoiceType.equals("done")) {
+                    scanner.nextLine();
+                    break;
+                }
 
                 switch (userChoiceType) {
 
@@ -153,6 +160,8 @@ public class Potion {
 
                         System.out.println("Enter ingredients to mix in (type 'done' to finish): ");
 
+                        LinkedList<Ingredient> mixedIngredients = new LinkedList<>();
+
                         while(true) {
 
                             newIngredient = scanner.next();
@@ -163,14 +172,11 @@ public class Potion {
                             newPower = scanner.nextInt();
                             scanner.nextLine();
 
-                            currentPotion.addIngredient(newIngredient, newPower);
+                            mixedIngredients.add(new Ingredient(newIngredient, newPower));
+
+                            currentPotion.addManyMixed(mixedIngredients);
                         }
 
-                        break;
-
-                    case "done":
-
-                        userChoice = "no";
                         break;
                     
                     default:
@@ -185,11 +191,11 @@ public class Potion {
             System.out.println(currentPotion);
 
             System.out.print("\nWould you like to create another potion? (yes/no): ");
-            userChoice = scanner.next();
+            createAnotherChoice = scanner.next();
             System.out.println();
 
-        scanner.close();
+        } while (createAnotherChoice.equals("yes"));
 
-        } while (userChoice.equals("yes"));
+        scanner.close();
     }
 }
