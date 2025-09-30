@@ -64,7 +64,7 @@ public class Potion {
 
         for(int i = 0; i < this.ingredients.size(); i++) {
 
-            System.out.printf("1. %s (Power: %d)\n", this.ingredients.get(i).getName(), this.ingredients.get(i).getPower());
+            System.out.printf("%d. %s (Power: %d)\n", i, this.ingredients.get(i).getName(), this.ingredients.get(i).getPower());
         }
 
     }
@@ -79,27 +79,117 @@ public class Potion {
         return String.format("This potion contains %d ingredients and is worth $%.2f.", ingredientCount, value);
     }
 
-    public double getPotionCount() {
-        return this.potionCounter;
+    public static int getPotionCount() {
+        return potionCounter;
     }
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        String userInput;
+        String userChoice = "no";
+        String userChoiceType;
+
+        Potion currentPotion;
         String newIngredient;
+        int newPower = 0;
+        int newQuantity = 0;
 
         System.out.println("Welcome, Mage. What potion will you craft today?");
         System.out.print("Start with an ingredient? (yes/no): ");
 
-        userInput = scanner.nextLine();
+        userChoice = scanner.nextLine();
+        do {
+            if(userChoice.equals("yes")) {
+                
+                System.out.println("Enter your first ingredient name and power level (e.g., DragonScale 10): ");
 
-        if(userInput.equals("yes")) {
-            
-            System.out.println("Enter your first ingredient name and power level (e.g., DragonScale 10): ");
+                newIngredient = scanner.next();
+                newPower = scanner.nextInt();
+                scanner.nextLine();
 
-            while(userInput.equals("yes")
-        }
-        
+                Ingredient firstIngredient = new Ingredient(newIngredient, newPower);
+                currentPotion = new Potion(firstIngredient);
+
+            }else {
+
+                currentPotion = new Potion();
+
+            }
+
+            while(userChoice.equals("yes")) {
+                
+                System.out.print("Add more ingredients? (single/multiple/mix/done): ");
+                
+                userChoiceType = scanner.nextLine();
+
+                switch (userChoiceType) {
+
+                    case "single":
+
+                        System.out.println("Enter ingredient name and power level: ");
+
+                        newIngredient = scanner.next();
+                        newPower = scanner.nextInt();
+                        scanner.nextLine();
+
+                        currentPotion.addIngredient(newIngredient, newPower);
+
+                        break;
+
+                    case "multiple":
+
+                        System.out.println("Enter ingredient name, power level, and quantity (e.g., GlimmeringMoss 5 3):");
+
+                        newIngredient = scanner.next();
+                        newPower = scanner.nextInt();
+                        newQuantity = scanner.nextInt();
+                        scanner.nextLine();
+
+                        currentPotion.addIngredient(newIngredient, newPower, newQuantity);
+
+                        break;
+
+                    case "mix":
+
+                        System.out.println("Enter ingredients to mix in (type 'done' to finish): ");
+
+                        while(true) {
+
+                            newIngredient = scanner.next();
+
+                            if(newIngredient.equals("done"))
+                                break;
+
+                            newPower = scanner.nextInt();
+                            scanner.nextLine();
+
+                            currentPotion.addIngredient(newIngredient, newPower);
+                        }
+
+                        break;
+
+                    case "done":
+
+                        userChoice = "no";
+                        break;
+                    
+                    default:
+                        break;
+                }
+            }
+
+            System.out.println("Your Potion is ready!");
+
+            currentPotion.printIngredients();
+
+            System.out.println(currentPotion);
+
+            System.out.print("\nWould you like to create another potion? (yes/no): ");
+            userChoice = scanner.next();
+            System.out.println();
+
+        scanner.close();
+
+        } while (userChoice.equals("yes"));
     }
 }
