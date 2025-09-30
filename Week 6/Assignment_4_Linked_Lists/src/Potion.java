@@ -133,14 +133,14 @@ public class Potion {
 
         Scanner scanner = new Scanner(System.in);
 
-        String userfirstChoice;
-        String userChoiceType;
-        String createAnotherChoice;
+        String userfirstChoice;     // Stores the user's "yes/no" answer to starting with an ingredient.
+        String userChoiceType;      // Stores the user's menu choice ("single", "multiple", "mix", or "done").
+        String createAnotherChoice; // Stores the user's "yes/no" answer to creating another potion.
 
-        Potion currentPotion;
-        String newIngredient;
-        int newPower = 0;
-        int newQuantity = 0;
+        Potion currentPotion;       // The Potion object being actively crafted in the current loop iteration.
+        String newIngredient;       // A temporary holder for the name of the next ingredient to be added.
+        int newPower = 0;           // A temporary holder for the power of the next ingredient.
+        int newQuantity = 0;        // A temporary holder for the quantity when adding multiple ingredients.
 
         // Outer do-while loop allows the user to create multiple potions.
         do {
@@ -224,6 +224,8 @@ public class Potion {
                             mixedIngredients.add(new Ingredient(newIngredient, newPower));
 
                         }
+                        
+                        scanner.nextLine(); 
 
                         currentPotion.addManyMixed(mixedIngredients);
 
