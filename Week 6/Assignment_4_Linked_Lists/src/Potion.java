@@ -125,7 +125,6 @@ public class Potion {
                 userChoiceType = scanner.nextLine();
 
                 if(userChoiceType.equals("done")) {
-                    scanner.nextLine();
                     break;
                 }
 
@@ -174,8 +173,9 @@ public class Potion {
 
                             mixedIngredients.add(new Ingredient(newIngredient, newPower));
 
-                            currentPotion.addManyMixed(mixedIngredients);
                         }
+
+                        currentPotion.addManyMixed(mixedIngredients);
 
                         break;
                     
@@ -191,7 +191,7 @@ public class Potion {
             System.out.println(currentPotion);
 
             System.out.print("\nWould you like to create another potion? (yes/no): ");
-            createAnotherChoice = scanner.next();
+            createAnotherChoice = scanner.nextLine();
             System.out.println();
 
         } while (createAnotherChoice.equals("yes"));
