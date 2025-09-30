@@ -230,6 +230,8 @@ public class Potion {
                         break;
                     
                     default:
+
+                        System.out.println("Invalid choice. Please enter single, multiple, mix, or done.");
                         break;
                 }
             }
@@ -246,7 +248,7 @@ public class Potion {
 
         } while (createAnotherChoice.equals("yes"));
 
-        System.out.printf("Total potions crafted: %d", Potion.getPotionCount());
+        System.out.printf("Total potions crafted: %d\n", Potion.getPotionCount());
         scanner.close();
     }
 }

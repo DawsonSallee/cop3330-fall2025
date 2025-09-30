@@ -5,7 +5,7 @@
 public class Ingredient {
 
     private String name; //The name of the ingredient
-    private int power = 0; // The magical power level of the ingredient
+    private int power; // The magical power level of the ingredient
 
     /**
      * Constructs a new Ingredient object with specified properties.
