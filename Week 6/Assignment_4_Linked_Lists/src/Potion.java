@@ -1,12 +1,21 @@
+// Dawson Sallee
+// Assignment 4
+// COP3330
+
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Potion {
 
-    private LinkedList<Ingredient> ingredients;
+    private LinkedList<Ingredient> ingredients; // A private LinkedList to store Ingredient objects.
 
     private static int potionCounter = 0;
 
+    // --- CONSTRUCTORS ---
+    /**
+     * Creates a Potion starting with one ingredient.
+     * @param ingredient The initial Ingredient to add to the potion.
+     */
     public Potion(Ingredient ingredient) {
 
         this.ingredients = new LinkedList<>();
@@ -14,7 +23,9 @@ public class Potion {
         potionCounter++;
 
     }
-
+    /**
+     * Creates an empty Potion.
+     */
     public Potion() {
 
         this.ingredients = new LinkedList<>();
@@ -22,12 +33,24 @@ public class Potion {
 
     }
 
+    // --- METHODS ---
+    /**
+     * Adds a single new ingredient to the potion's list.
+     * @param name The name of the new ingredient.
+     * @param power The power of the new ingredient.
+     */
     public void addIngredient(String name, int power) {
         
         this.ingredients.add(new Ingredient(name, power));
 
     }
 
+    /**
+     * Adds a specified quantity of the same ingredient.
+     * @param name The name of the ingredient to add.
+     * @param power The power of the ingredient.
+     * @param quantity The number of times to add this ingredient.
+     */
     public void addIngredient(String name, int power, int quantity) {
 
         for(int i = 0; i < quantity; i++) {
@@ -37,6 +60,10 @@ public class Potion {
         }
     }
 
+    /**
+     * Adds all ingredients from a provided list into this potion's list.
+     * @param newIngredients A LinkedList of ingredients to be added.
+     */
     public void addManyMixed(LinkedList<Ingredient> newIngredients) {
 
         for(int i = 0; i < newIngredients.size(); i++) {
@@ -44,6 +71,11 @@ public class Potion {
         }
     }
 
+    /**
+     * Calculates the market value of the potion based on its contents.
+     * The formula is a base value plus bonuses for ingredient names and power.
+     * @return The calculated value as a double.
+     */
     public double calculateValue() {
 
         double value = 50;
@@ -58,6 +90,9 @@ public class Potion {
         return value;
     }
 
+    /**
+     * Prints a user-friendly, numbered list of all ingredients in the potion.
+     */
     public void printIngredients() {
 
         System.out.println("Your Potion contains: ");
@@ -69,6 +104,12 @@ public class Potion {
 
     }
 
+    /**
+     * Overrides the default toString() method inherited from the Object class.
+     * This provides a custom, formatted string representation of a Potion object.
+     * It is automatically called by methods like System.out.println().
+     * @return A formatted String summarizing the potion's contents and value.
+     */
     @Override
     public String toString() {
 
@@ -79,6 +120,11 @@ public class Potion {
         return String.format("This potion contains %d ingredients and is worth $%.2f.", ingredientCount, value);
     }
 
+    /**
+     * A static method to get the total number of potions ever created.
+     * Can be called directly on the class: Potion.getPotionCount().
+     * @return The current value of the static potionCounter.
+     */
     public static int getPotionCount() {
         return potionCounter;
     }
@@ -96,6 +142,7 @@ public class Potion {
         int newPower = 0;
         int newQuantity = 0;
 
+        // Outer do-while loop allows the user to create multiple potions.
         do {
 
             System.out.println("Welcome, Mage. What potion will you craft today?");
@@ -103,6 +150,7 @@ public class Potion {
 
             userfirstChoice = scanner.nextLine();
 
+             // Create the initial Potion object, either empty or with one ingredient.
             if(userfirstChoice.equals("yes")) {
                 
                 System.out.println("Enter your first ingredient name and power level (e.g., DragonScale 10): ");
@@ -118,12 +166,14 @@ public class Potion {
                 currentPotion = new Potion();
             }
 
+            // Inner while(true) loop serves as the main menu for adding ingredients.
             while(true) {
                 
                 System.out.print("Add more ingredients? (single/multiple/mix/done): ");
                 
                 userChoiceType = scanner.nextLine();
 
+                // The only way to exit this menu loop is by typing "done".
                 if(userChoiceType.equals("done")) {
                     break;
                 }
@@ -184,18 +234,19 @@ public class Potion {
                 }
             }
 
+            // After the user is done, print the final potion details.
             System.out.println("Your Potion is ready!");
-
             currentPotion.printIngredients();
-
             System.out.println(currentPotion);
 
+            // Ask the user if they want to run the program again.
             System.out.print("\nWould you like to create another potion? (yes/no): ");
             createAnotherChoice = scanner.nextLine();
             System.out.println();
 
         } while (createAnotherChoice.equals("yes"));
 
+        System.out.printf("Total potions crafted: %d", currentPotion.getPotionCount());
         scanner.close();
     }
 }
