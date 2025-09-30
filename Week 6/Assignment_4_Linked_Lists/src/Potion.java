@@ -153,11 +153,13 @@ public class Potion {
              // Create the initial Potion object, either empty or with one ingredient.
             if(userfirstChoice.equals("yes")) {
                 
-                System.out.println("Enter your first ingredient name and power level (e.g., DragonScale 10): ");
+                System.out.print("Enter your first ingredient name and power level (e.g., DragonScale 10): ");
 
                 newIngredient = scanner.next();
                 newPower = scanner.nextInt();
                 scanner.nextLine();
+
+                System.out.println();
 
                 Ingredient firstIngredient = new Ingredient(newIngredient, newPower);
                 currentPotion = new Potion(firstIngredient);
@@ -182,7 +184,7 @@ public class Potion {
 
                     case "single":
 
-                        System.out.println("Enter ingredient name and power level: ");
+                        System.out.print("Enter ingredient name and power level: ");
 
                         newIngredient = scanner.next();
                         newPower = scanner.nextInt();
@@ -194,7 +196,7 @@ public class Potion {
 
                     case "multiple":
 
-                        System.out.println("Enter ingredient name, power level, and quantity (e.g., GlimmeringMoss 5 3):");
+                        System.out.print("Enter ingredient name, power level, and quantity (e.g., GlimmeringMoss 5 3):");
 
                         newIngredient = scanner.next();
                         newPower = scanner.nextInt();
@@ -224,7 +226,7 @@ public class Potion {
                             mixedIngredients.add(new Ingredient(newIngredient, newPower));
 
                         }
-                        
+
                         scanner.nextLine(); 
 
                         currentPotion.addManyMixed(mixedIngredients);
@@ -233,20 +235,21 @@ public class Potion {
                     
                     default:
 
-                        System.out.println("Invalid choice. Please enter single, multiple, mix, or done.");
+                        System.out.print("Invalid choice. Please enter single, multiple, mix, or done.");
                         break;
                 }
+                System.out.println();
             }
 
             // After the user is done, print the final potion details.
             System.out.println("Your Potion is ready!");
             currentPotion.printIngredients();
+            System.out.println();
             System.out.println(currentPotion);
 
             // Ask the user if they want to run the program again.
             System.out.print("\nWould you like to create another potion? (yes/no): ");
             createAnotherChoice = scanner.nextLine();
-            System.out.println();
 
         } while (createAnotherChoice.equals("yes"));
 
