@@ -1,3 +1,7 @@
-public class Rechargeable {
+public interface Rechargeable {
+
+    public int getBatteryLevel();
+
+    public void recharge();
     
 }
