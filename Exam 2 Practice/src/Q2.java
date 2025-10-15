@@ -4,24 +4,29 @@ import java.io.PrintWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+
 public class Q2 {
     public static void main(String[] args) {
 
-        System.out.println("Enter file name: ");
-
         Scanner scanner = new Scanner(System.in);
+        String userInput;
 
-        String fileName = scanner.nextLine();
+        System.out.println("Enter a file name: ");
 
-        try(PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
+        userInput = scanner.nextLine();
+
+        try(PrintWriter pw = new PrintWriter(new FileWriter(userInput))) {
+            
             pw.println("5");
-            pw.println("10");
-            pw.println("12");
-        }catch(IOException e) {
-            System.out.println("error");
+            pw.println("18");
+
+        } catch(IOException e) {
+            System.out.println("file not found");
         }
 
-        try(Scanner scanner2 = new Scanner(new File(fileName))) {
+        File file = new File(userInput);
+
+        try (Scanner scanner2 = new Scanner(file)) {
 
             int total = 0;
 
@@ -29,12 +34,13 @@ public class Q2 {
                 total += scanner2.nextInt();
             }
 
-            System.out.println(total);
+            System.out.println("The total is: " + total);
 
         } catch(FileNotFoundException e) {
-            System.out.println("File Not Found");
+            System.out.println("file not found");
         }
 
         scanner.close();
+
     }
 }
