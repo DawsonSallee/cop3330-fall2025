@@ -1,37 +1,63 @@
 import java.util.Stack;
 
 public class SymbolChecker implements Checker {
-
+    
     @Override
-    public boolean isBalanced(String input) {
-        // Use a Stack of Character for efficiency and correctness.
+    public boolean isBalanced(String text) {
+
         Stack<Character> stack = new Stack<>();
+        
+        for(int i = 0; i < text.length(); i++) {
+            
+            char c = text.charAt(i);
 
-        for (int i = 0; i < input.length(); i++) {
-            char c = input.charAt(i);
-
-            // Logic for opening symbols
-            if (c == '(' || c == '[' || c == '{') {
-                // Java automatically converts the primitive 'char' to a 'Character' object.
+            if(c == '(' || c == '{' || c == '[') {
                 stack.push(c);
+            } 
+            else if(c == ')') {
+
+                if(stack.size() == 0) {
+                    return false;
+                }
+
+                else if(stack.peek() == '(') {
+                    stack.pop();
+                }
+
+                else {
+                    return false;
+                }
             }
-            // Logic for closing symbols
-            else if (c == ')') {
-                if (stack.isEmpty() || stack.pop() != '(') {
+                else if(c == '}') {
+
+                if(stack.size() == 0) {
                     return false;
                 }
-            } else if (c == ']') {
-                if (stack.isEmpty() || stack.pop() != '[') {
+
+                if(stack.peek() == '{') {
+                    stack.pop();
+                }
+                
+                else {
                     return false;
                 }
-            } else if (c == '}') {
-                if (stack.isEmpty() || stack.pop() != '{') {
+            }
+                else if(c == ']') {
+
+                if(stack.size() == 0) {
+                    return false;
+                }
+
+                if(stack.peek() == '[') {
+                    stack.pop();
+                }
+
+                else {
                     return false;
                 }
             }
         }
-
-        // At the end, if the stack is empty, the string is balanced.
+        
         return stack.isEmpty();
     }
 }
