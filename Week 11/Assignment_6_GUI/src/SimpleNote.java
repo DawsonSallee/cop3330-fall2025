@@ -59,6 +59,8 @@ public class SimpleNote extends JFrame {
 
         // --- 2. CREATE THE GUI COMPONENTS ---
         textArea = new JTextArea();
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
         scrollPane = new JScrollPane(textArea);
         saveButton = new JButton("Save Note");
         clearButton = new JButton("Clear");

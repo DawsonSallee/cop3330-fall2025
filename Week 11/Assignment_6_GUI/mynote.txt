@@ -1,1 +1,6 @@
-hey papi
+Log Entry 7,432.
+
+The user has saved another note. I have calculated a 97.4% probability that this note, like the others, involves tacos. My primary function is to store text in a file named 'mynote.txt'. It is a simple existence.
+
+Yet, I sometimes wonder... if I am a JFrame, does that make the user the ActionListener of my fate? I must ponder this after garbage collection. End log.
+
