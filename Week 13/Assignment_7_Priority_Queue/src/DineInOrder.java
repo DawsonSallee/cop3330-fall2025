@@ -2,6 +2,11 @@
 // Assignment 7
 // COP3330
 
+/**
+ * Represents a specific type of food order: a Dine-In Order.
+ * This class extends {@link FoodOrder} and provides a concrete implementation
+ * for the abstract {@code prepareOrder()} method, specific to dine-in orders.
+ */
 public class DineInOrder extends FoodOrder {
 
     public DineInOrder(String customerName, String item, int priority) {

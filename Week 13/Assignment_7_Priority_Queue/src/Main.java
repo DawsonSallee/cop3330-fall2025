@@ -7,13 +7,20 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * Main class for the Restaurant Order Handler system.
+ * This program reads commands from an input file, manages food orders using a PriorityQueue,
+ * and processes orders based on their priority. It supports INSERT and PREPARE commands.
+ * The input file is searched for in a specific order: a7a.txt, then a7b.txt, then a7c.txt.
+ */
 public class Main {
 
     public static void main(String[] args) {
         
         Scanner fileScanner = null;
-        FoodOrder newOrder = null;
 
+        // Attempts to open input files in a specific order: a7a.txt, then a7b.txt, then a7c.txt.
+        // If one is found, it's opened and used. If none are found, the program terminates.
         try {
 
             fileScanner = new Scanner(new File("a7a.txt"));
@@ -40,20 +47,25 @@ public class Main {
 
 
         PriorityQueue<FoodOrder> queue = new PriorityQueue<>();
-
+        
+        FoodOrder newOrder = null;
+        
+        // The first line of the file contains an integer, N, representing the total number of commands.
         int numOperations = fileScanner.nextInt();
-        fileScanner.nextLine();
+        fileScanner.nextLine(); // CONSUME THE LEFTOVER NEWLINE character after nextInt()
 
-        String line;
-        String[] words;
-        String command;
+        String line;        // Stores the entire line read from the file
+        String[] words;     // Stores parts of the line after splitting by space
+        String command;     // Stores the first word of the line (e.g., "INSERT" or "PREPARE")
 
-        String type;
+        String type;        // Specific order type (e.g., "TAKEOUT", "DINEIN")
         String customerName;
         String item;
         int priority;
 
-        for(int i = 1; i < numOperations; i++) {
+        
+        // Iterates through the file, processing each command as specified by numOperations.
+        for(int i = 0; i < numOperations; i++) {
             
             line = fileScanner.nextLine();
             words = line.split(" ");
@@ -61,10 +73,14 @@ public class Main {
 
             if(command.equals("INSERT")) {
 
+                // Parse the details for the new order from the 'words' array
                 type = words[1];
                 customerName = words[2];
                 item = words[3];
                 priority = Integer.parseInt(words[4]);
+
+                // Reset newOrder for each iteration to avoid using a stale object
+                newOrder = null; 
 
                 switch(type) {
                     case "TAKEOUT":
