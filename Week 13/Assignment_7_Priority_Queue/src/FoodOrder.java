@@ -1,5 +1,5 @@
 // Dawson Sallee
-// Assignment 6
+// Assignment 7
 // COP3330
 
 public abstract class FoodOrder implements Comparable<FoodOrder> {
@@ -16,6 +16,18 @@ public abstract class FoodOrder implements Comparable<FoodOrder> {
     }
 
     public abstract void prepareOrder();
+
+    public String getCustomerName() {
+        return this.customerName;
+    }
+
+    public String getItem() {
+        return this.item;
+    }
+
+    public int getPriority() {
+        return this.priority;
+    }
 
     @Override
     public int compareTo(FoodOrder other) {
