@@ -1,3 +1,7 @@
+// Dawson Sallee
+// Assignment 8
+// COP3330
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
