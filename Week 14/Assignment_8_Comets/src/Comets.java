@@ -76,13 +76,13 @@ class GameObject {
         x += dx;
         y += dy;
         
-        if(x < 0) {x += width}
+        if(x < 0) { x += width; }
 
-        if(x > width) {x -= width}
+        if(x > width) { x -= width; }
 
-        if(y < 0) {y += height}
+        if(y < 0) { y += height; }
 
-        if(y > height) {y -= height}
+        if(y > height) { y -= height; }
        
     }
 }
@@ -108,19 +108,35 @@ class Ship extends GameObject {
      * Updates the ship's movement, rotation, and velocity
      */
     public void update(int width, int height, boolean isThrusting, boolean turnLeft, boolean turnRight) {
-    	//TODO: Implement ship's movement physics.
 
-        // If pressing a rotation key, apply rotation
+        // Adjust the ship's rotation angle based on player input.
+        double rotation = getRotation();
+        if(turnLeft) { rotation -= turnRate; }
+        if(turnRight) {rotation += turnRate; }
+        setRotation(rotation);
 
         // Calculate new velocity components
         double newDx = getDx();
         double newDy = getDy();
 
-        // If is Thrusting, thrust in the new direction. (add thrust to newDx and newDy) (x_component = thrust * Math.cos(newRotation),  y_component = thrust * Math.sin(newRotation))
- 
-        // Apply friction
+        // Adjust the ship's rotation angle based on player input.
+        if(isThrusting) {
+            newDx += Math.cos(rotation) * thrust;
+            newDy += Math.sin(rotation) * thrust;
+        }
+         
+        // Apply friction to gradually slow the ship down.
+        newDx *= friction;
+        newDy *= friction;
 
-        // Limit speed (speed is the length of the diagonal formed by the x/y velocities). If the speed > maxSpeed, scale the speed in each direction based on the ratio related to the current direction.
+        // Calculate the ship's current speed using the Pythagorean theorem.
+        double speed = Math.sqrt(newDx*newDx + newDy*newDy);
+
+        // Cap the velocity at maxSpeed if the ship is moving too fast.
+        if(speed > maxSpeed) {
+            newDx = newDx * maxSpeed / speed;
+            newDy = newDy * maxSpeed / speed;
+        }
 
         // Update velocity state
         setDx(newDx);
@@ -433,14 +449,41 @@ class GamePanel extends JPanel implements Runnable, KeyListener {
         // Synchronize over both lists for atomic collision check/structural change
         synchronized (bullets) {
             synchronized (comets) {
-            	
-            	//TODO implement bullet/comet collision detection 
-            	// Loop through all the bullets. Loop through all the comets for each bullet,
-            	// 		Check if the bullet is within the radius of the comet using Point2D.distance.
-            	//		If it is, remove the bullet, remove the comet, and increment the score by 10*the size of the comet.
-            	// 		Shatter() the comet that was destroyed to produce smaller comets, add them to newComets, and add newComets to the comets list. 
-               
-            	
+
+            Iterator<Bullet> bulletIterator = bullets.iterator();
+
+            // Loop through all active bullets
+            while(bulletIterator.hasNext()) {
+                    
+                Bullet bulletObject = bulletIterator.next();
+
+                Iterator<Comet> cometIterator = comets.iterator();
+
+                // Check this specific bullet against every comet
+                while(cometIterator.hasNext()) {
+
+                    Comet cometObject = cometIterator.next();
+
+                    // Check if the bullet is inside the comet's radius
+                    if(cometObject.getRadius() > Point2D.distance(cometObject.getX(), cometObject.getY(), bulletObject.getX(), bulletObject.getY())) {
+                        
+                        // Increase score based on comet size
+                        score += 10 * cometObject.getSize();
+
+                        // Generate smaller comets from the destruction
+                        newComets.addAll(cometObject.shatter());
+
+                        // Remove the bullet and the comet from the game
+                        bulletIterator.remove();
+                        cometIterator.remove();
+
+                        // Stop checking this bullet since it is destroyed
+                        break;
+                    }
+                }
+            }
+            // Add all shattered pieces back to the main game list
+            comets.addAll(newComets); 	
             }
         }
 
@@ -448,18 +491,30 @@ class GamePanel extends JPanel implements Runnable, KeyListener {
         if (lives > 0) {
             // Synchronize for reading the comets list
             synchronized (comets) {
-            	
-            	//TODO: Implement comet/ship collision
-            	
-            	//Loop through all the comets
-            	// Use Point2D.distance to find the distance to the ship
-            	// if the distance is less than the radius of the comet plus some buffer pixels:
-            	//    subtract a life, check if there are any remaining lives.
-            	// 	    If there are, set ship = to a new ship in the middle of the screen (ship = new Ship(Comets.GAME_WIDTH / 2.0, Comets.GAME_HEIGHT / 2.0);)
-            	//		removing any existing bullets
-            	// Only allow one ship/comet collision to occur (break if a collision happens.
-              
-            }
+                for(Comet comet : comets) {
+
+                    // Check if the ship is touching the comet (with a small buffer)
+                    if(comet.getRadius() > Point2D.distance(comet.getX(),comet.getY(), ship.getX(), ship.getY()) + 5) {
+
+                        lives--;
+
+                        // If player is still alive, reset the ship
+                        if(lives > 0) { 
+
+                            ship = new Ship(Comets.GAME_WIDTH / 2.0, Comets.GAME_HEIGHT / 2.0);
+                            
+                            // Clear all bullets safely to reset the playing field
+                            synchronized(bullets) {
+                                bullets.clear();
+                            }
+                        } 
+
+                         // Stop checking to ensure only one collision occurs per frame
+                        break;
+
+                    }
+                }
+            } 
         }
     }
 
