@@ -34,5 +34,5 @@
 
     // --- 6. Disable Quick Fixes (The Lightbulb Icon) ---
     // This stops the lightbulb from suggesting fixes like adding missing imports.
-    "editor.lightbulb.enabled": false
+    "editor.lightbulb.enabled": "off"
 }
